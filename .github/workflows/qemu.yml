@@ -32,3 +32,8 @@ jobs:
       
       - name: Install
         run: sudo make install
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: compiled-version
+          path: /opt
