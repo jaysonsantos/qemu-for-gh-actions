@@ -22,7 +22,7 @@ jobs:
       - name: Download and extract
         run: |
           wget -O qemu.tar.xz https://download.qemu.org/qemu-7.2.0.tar.xz
-          tar xvJf --strip-components=1 qemu.tar.xz
+          tar xvJf qemu.tar.xz --strip-components=1
 
       - name: Configure
         run: ./configure --prefix=/opt/qemu
