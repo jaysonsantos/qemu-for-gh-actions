@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y libglib2.0-dev libfdt-dev libpixman-1-dev zlib1g-dev ninja-build
+      - name: Download and extract
+        run: |
+          wget -O qemu.tar.xz https://download.qemu.org/qemu-7.2.0.tar.xz
+          tar xvJf --strip-components=1 qemu.tar.xz
+
+      - name: Configure
+        run: ./configure --prefix=/opt/qemu
+      
+      - name: Compile
+        run: make -j 16
+      
+      - name: Install
+        run: sudo make install
